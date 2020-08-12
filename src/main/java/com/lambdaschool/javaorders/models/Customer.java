@@ -31,8 +31,7 @@ public class Customer
     {
     }
 
-    public Customer(long custcode,
-                    String custname,
+    public Customer(String custname,
                     String custcity,
                     String custcountry,
                     String workingarea,
@@ -41,8 +40,8 @@ public class Customer
                     double receiveamt,
                     double paymentamt,
                     double outstandingamt,
-                    String phone) {
-        this.custcode = custcode;
+                    String phone,
+                    Agent agent) {
         this.custname = custname;
         this.custcity = custcity;
         this.custcountry = custcountry;
@@ -53,6 +52,15 @@ public class Customer
         this.paymentamt = paymentamt;
         this.outstandingamt = outstandingamt;
         this.phone = phone;
+        this.agent = agent;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
     }
 
     public long getCustcode() {

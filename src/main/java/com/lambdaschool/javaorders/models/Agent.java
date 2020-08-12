@@ -16,24 +16,24 @@ public class Agent
     @Column(unique = true,
             nullable = false)
     private String agentname;
-
     private String workingarea;
     private double commission;
     private String phone;
     private String country;
 
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Customer> customers = new ArrayList<>();
+
     public Agent()
     {
     }
 
-    public Agent(long agentcode,
-                 String agentname,
+    public Agent(String agentname,
                  String workingarea,
                  double commission,
                  String phone,
                  String country)
     {
-        this.agentcode = agentcode;
         this.agentname = agentname;
         this.workingarea = workingarea;
         this.commission = commission;
@@ -88,9 +88,6 @@ public class Agent
     public void setCountry(String country) {
         this.country = country;
     }
-
-    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Customer> customers = new ArrayList<>();
 
     @Override
     public String toString() {

@@ -1,5 +1,7 @@
 package com.lambdaschool.javaorders.models;
 
+import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,27 +18,44 @@ public class Order
 
     @ManyToOne
     @JoinColumn(name = "custcode", nullable = false)
-    private Order order;
+    private Customer custcode;
 
     private String orderdescription;
 
     @ManyToMany
-    @JoinTable(name = "orderpayments",
+    @JoinTable(name = "orderspayments",
             joinColumns = @JoinColumn(name = "ordnum"),
-            inverseJoinColumns = @JoinColumn(name = "paymentid"))
+            inverseJoinColumns = @JoinColumn(name = " paymentid"))
     private Set<Payment> payments = new HashSet<>();
 
     public Order() {
     }
 
-    public Order(long ordnum,
-                 double ordamount,
+    public Order(double ordamount,
                  double advanceamount,
-                 String orderdescription) {
-        this.ordnum = ordnum;
+                 Customer customer,
+                 String orderdescription)
+    {
         this.ordamount = ordamount;
         this.advanceamount = advanceamount;
+        this.custcode = custcode;
         this.orderdescription = orderdescription;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public Customer getCustomer() {
+        return custcode;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.custcode = customer;
     }
 
     public long getOrdnum() {
@@ -71,14 +90,9 @@ public class Order
         this.orderdescription = orderdescription;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "ordnum=" + ordnum +
-                ", ordamount=" + ordamount +
-                ", advanceamount=" + advanceamount +
-                ", order=" + order +
-                ", orderdescription='" + orderdescription + '\'' +
-                '}';
+    public void addPayment(Payment payment)
+    {
+        this.payments.add(payment);
     }
+
 }

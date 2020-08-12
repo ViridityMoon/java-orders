@@ -1,6 +1,8 @@
 package com.lambdaschool.javaorders.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "payments")
@@ -17,10 +19,15 @@ public class Payment
     {
     }
 
-    public Payment(long paymentid, String type) {
-        this.paymentid = paymentid;
+    @ManyToMany(mappedBy = "payments")
+    private Set<Order> orders = new HashSet<>();
+
+    public Payment(String type)
+    {
         this.type = type;
     }
+
+
 
     public long getPaymentid() {
         return paymentid;
@@ -36,6 +43,14 @@ public class Payment
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
